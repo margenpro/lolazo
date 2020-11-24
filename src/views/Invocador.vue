@@ -12,6 +12,7 @@ export default {
         AppInvocador
     }
 }
+
 </script>
 
 <style>
