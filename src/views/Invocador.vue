@@ -1,18 +1,19 @@
 <template>
-    <div class="bg-dark text-light p-5 bgd">
-    <app-invocador class="m-auto"></app-invocador>
+  <div class="bg-dark p-5 bgd">
+    <b-container fluid class="bg-dark p-5">
+      <app-invocador></app-invocador>
+    </b-container>
   </div>
 </template>
 
 <script>
-import AppInvocador from '../components/AppInvocador'
+import AppInvocador from "../components/AppInvocador";
 export default {
-    name: "Invocador",
-    components:{
-        AppInvocador
-    }
-}
-
+  name: "Invocador",
+  components: {
+    AppInvocador,
+  },
+};
 </script>
 
 <style>

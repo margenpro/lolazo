@@ -8,8 +8,13 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "axios": "^0.21.1",
+    "bcryptjs": "^2.4.3",
     "bootstrap-vue": "^2.19.0",
     "core-js": "^3.6.5",
+    "dns": "^0.1.2",
+    "module": "^0.0.1",
+    "mongodb": "^3.6.4",
     "vue": "^2.6.11",
     "vue-router": "^3.4.9"
   },
