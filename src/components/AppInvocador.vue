@@ -1,45 +1,32 @@
 <template>
-  <div class="text-light">
+  <div class="text-light p-1 container">
     <b-form @submit="onSubmit" class="m-1 text-center">
       <b-form-input
         v-model="name"
         placeholder="Ingresar nombre del Invocador"
+        fluid
       ></b-form-input>
       <b-button class="m-3" type="submit" variant="primary">Buscar</b-button>
     </b-form>
-    <div>
-      <b-container>
-        <b-row>
-          <b-card-group
-            deck
-            v-for="champion in maestries"
-            :key="champion.championId"
-          >
-            <b-col>
-              <b-card
-                bg-variant="dark auto center"
-                :header="getChampionName(champion.championId)"
-                class="text-center"
-                style="max-width: 10rem"
-                :img-src="getChampionImage(champion.championId)"
-                img-alt="Image"
-                img-top
-                fluid
-              >
-                <b-card-body class="auto">
-                  <b-img
-                    :src="getMasteryImage(champion.championLevel)"
-                    fluid
-                  ></b-img>
-                  Nivel: {{ champion.championLevel }} <br />
-                  Puntos: {{ champion.championPoints }}
-                </b-card-body>
-              </b-card>
-            </b-col>
-          </b-card-group>
-        </b-row>
-      </b-container>
-    </div>
+    <b-container>
+      <router-link
+        class="mt-1"
+        :to="{ name: 'Invocador', params: { sumId, show } }"
+      >
+        <b-card
+          v-if="show"
+          bg-variant="dark auto center"
+          :header="getSummonerName()"
+          class="text-center"
+          style="max-width: 10rem"
+          :img-src="getSummonerIcon()"
+          img-alt="Image"
+          img-bottom
+        >
+          Nivel: {{ getSummonerLevel() }}
+        </b-card>
+      </router-link>
+    </b-container>
   </div>
 </template>
 
@@ -51,42 +38,41 @@ export default {
     return {
       name: "",
       summoner: "",
-      maestries: "",
+      show: false,
+      profileIconId: "",
+      level: "",
+      sumName: "",
+      sumId: "",
     };
   },
   methods: {
-    getMasteryImage(id) {
-      return riotApi.getMasteryImage(id);
+    getSummonerName() {
+      return this.sumName;
     },
-    getChampionName(key) {
-      return riotApi.getChampionNameByKey(key)
+    getSummonerLevel() {
+      return this.level.toString();
     },
-    getChampionImage(key) {
-      return riotApi.getChampionImageByKey(key)
+    getSummonerIcon() {
+      return riotApi.getSummonerImageById(this.profileIconId);
     },
-
     async onSubmit(evt) {
       evt.preventDefault();
       this.summoner = await this.getSummoner(this.name);
-      this.maestries = await this.getMaestries(await this.summoner.id);
+      this.profileIconId = await this.summoner.profileIconId;
+      this.level = await this.summoner.summonerLevel;
+      this.sumName = await this.summoner.name;
+      this.sumId = await this.summoner.id;
+      this.show = true;
     },
     async getSummoner(name) {
       let invocador = null;
       try {
-        invocador = await riotApi.getSummonerByName(name);
+        await this.$store.dispatch("getSummonerByName", name);
+        invocador = this.$store.getters.getSummoner;
       } catch (e) {
         alert(e.message);
       }
       return invocador;
-    },
-    async getMaestries(id) {
-      let maestrias = null;
-      try {
-        maestrias = await riotApi.getChampionsMasteryBySummonerId(id);
-      } catch (e) {
-        alert(e.message);
-      }
-      return maestrias;
     },
   },
 };

@@ -12,4 +12,9 @@ export default [
         name: 'Invocador',
         component: Invocador
     },
+    {
+        path: '/invocador/maestrias',
+        name: 'Maestrias',
+        component: Invocador
+    },
 ]
