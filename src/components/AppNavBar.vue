@@ -8,9 +8,9 @@
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
           <b-nav-item to="/">Inicio</b-nav-item>
+          <b-nav-item to="/champions">Campeones</b-nav-item>
           <b-nav-item to="/invocador">Invocador</b-nav-item>
         </b-navbar-nav>
-
       </b-collapse>
     </b-navbar>
   </div>
@@ -21,5 +21,4 @@ export default {};
 </script>
 
 <style>
-
 </style>

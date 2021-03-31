@@ -1,6 +1,7 @@
 import axios from 'axios'
 import hasher from './hasher'
-import championsJson from '../../dragontail/11.3.1/data/es_AR/champion.json'
+import championsJson from '../modules/champions.json'
+import summonerJson from '../modules/summoner.json'
 
 const key = hasher.getApiKey()
 
@@ -88,7 +89,29 @@ function getMasteryImage(id) {
 }
 
 function getSummonerImageById(id) {
-    return `/profileicon/${id}.png`
+    return `/profileicon/${id}`
+}
+
+function getSummonerSpellsData(){
+    return summonerJson.data
+}
+
+function getSpellImageByKey(key){
+    const data = Object.values(getSummonerSpellsData())
+    let spell = data.find(e => e.key == key)
+    return `/summonerSpells/${spell.image.full}`
+}
+
+function getSpellDescriptionByKey(key) {
+    const data = Object.values(getSummonerSpellsData())
+    let spell = data.find(e => e.key == key)
+    return spell.description
+}
+
+function getSpellNameByKey(key){
+    const data = Object.values(getSummonerSpellsData())
+    let spell = data.find(e => e.key == key)
+    return spell.name
 }
 
 export default {
@@ -102,5 +125,8 @@ export default {
     getSummonerImageById,
     getMatchInfoById,
     getParticipantByAccId,
-    getParticipantFromMatch
+    getParticipantFromMatch,
+    getSpellImageByKey,
+    getSpellDescriptionByKey,
+    getSpellNameByKey
 }

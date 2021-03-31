@@ -2,6 +2,7 @@ import axios from 'axios'
 import Vue from 'vue'
 import Vuex from 'vuex'
 import hasher from './modules/hasher'
+import riotApi from './modules/riotApi'
 
 Vue.use(Vuex)
 const key = hasher.getApiKey()
@@ -9,10 +10,14 @@ const key = hasher.getApiKey()
 export const store = new Vuex.Store({
   state: {
     activeSummoner: {},
+    champions: [],
   },
   mutations: {
     async getSummonerByName(state, summoner) {
       state.activeSummoner = await summoner
+    },
+    getChampions(state, champs){
+      state.champions = champs
     },
   },
 
@@ -20,6 +25,10 @@ export const store = new Vuex.Store({
     async getSummonerByName(context, name) {
         let response = await getSummonerByName(name)
         context.commit('getSummonerByName', response)
+      },
+      getChampions(context){
+        let res = getChampionList()
+        context.commit('getChampions',res)
       },
   },
   getters: {
@@ -31,6 +40,9 @@ export const store = new Vuex.Store({
     },
     getSummonerPrfileIconId: (state) => {
         return state.activeSummoner.profileIconId
+    },
+    getChampions: (state) => {
+      return state.champions
     },
   }
 })
@@ -44,6 +56,10 @@ async function getSummonerByName (name) {
         throw new Error("Error al conectar con Riot")
     }
     return retorno
+}
+
+function getChampionList(){
+  return Object.values(riotApi.getChampionsList())
 }
 
 

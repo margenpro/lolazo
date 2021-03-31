@@ -16,6 +16,9 @@ export default {
     AppNavBar,
     AppFooter,
   },
+  beforeMount(){
+    this.$store.dispatch("getChampions")
+  },
 };
 </script>
 
