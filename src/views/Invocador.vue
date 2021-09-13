@@ -25,8 +25,9 @@
         <b-tab title="Mis Maestrias">
           <app-invocador-maestrias></app-invocador-maestrias>
         </b-tab>
-        <b-tab title="Mis Partidas" active></b-tab>
-        <app-invocador-partidas></app-invocador-partidas>
+        <b-tab title="Mis Partidas" active>
+          <app-invocador-partidas></app-invocador-partidas>
+        </b-tab>
       </b-tabs>
     </b-container>
   </div>
@@ -53,10 +54,10 @@ export default {
     getSummonerName() {
       return this.summoner.name;
     },
-   getSummonerLevel() {
+    getSummonerLevel() {
       return this.summoner.summonerLevel.toString();
     },
-   getSummonerIcon() {
+    getSummonerIcon() {
       return riotApi.getSummonerImageById(this.summoner.profileIconId);
     },
   },
